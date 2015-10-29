@@ -7,7 +7,7 @@ DownloadMii is a repo based online marketplace for homebrew applications & games
 ```
 npm install -g typescript
 ```
-2. Navigate to /src
+2. Navigate to /src & build
 ```
 tsc --out app.js base.ts
 ```
