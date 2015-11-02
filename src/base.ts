@@ -5,7 +5,7 @@
 //   | |__| | (_) \ V  V /| | | | | (_) | (_| | (_| | |  | | | |
 //   |_____/ \___/ \_/\_/ |_| |_|_|\___/ \__,_|\__,_|_|  |_|_|_|
 //                                                              
-//   ©2014-2015 filfat Studios AB
+//   © 2014-2015 filfat Studios AB
 //   Licensed under the MIT license
 
 /// <reference path="DownloadMii.ts" />
