@@ -19,17 +19,15 @@ module DownloadMii {
 		public Homepage: string;
 		public Author: string;
 		public Section: string;
+		public Bin: Array<{Href: string, Path: string}>;
 		
 		//Assets
 		public Icon: {Href: string, Size: number};
 		public Accent: string;
 	}
 	export class Settings {
-		public repo = [
-			{
-				name: 'DownloadMii',
-				url: 'http://www.downloadmii.com',
-			},
+		public sources = [
+			'http://www.downloadmii.com/',
 		];
 	}
 	
@@ -38,9 +36,27 @@ module DownloadMii {
 		public DownloadFile: Function;
 		public ReadFile: Function;
 		public WriteFile: Function;
+		public Apps: Array<App> = [];
 		
 		public DownloadApp(app: App) {
 			
+		}
+		public GetApps() {
+			var sources = this.Settings.sources;
+			for(var n = 0; n < sources.length; n++) {
+				//var Apps = [];
+				var data = this.DownloadFile(sources[n] + 'downloadmii.json');
+				var apps;
+				
+				try{
+					apps = JSON.parse(data);
+				} catch(e) {
+					//TODO: Handle exception
+					continue;
+				}
+				
+				this.Apps['extend'](apps);
+			}
 		}
 		public GetSettings() {
 			var f = this.ReadFile('settings.json');
@@ -58,4 +74,9 @@ module DownloadMii {
 			}
 		}
 	}
+}
+
+//Taken from http://stackoverflow.com/questions/1374126/how-to-extend-an-existing-javascript-array-with-another-array
+Array.prototype['extend'] = function (other_array) {
+    other_array.forEach(function(v) {this.push(v)}, this);    
 }

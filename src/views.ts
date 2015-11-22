@@ -8,25 +8,6 @@
 //   ©2014-2015 filfat Studios AB
 //   Licensed under the MIT license
 
-var apps: Array<DownloadMii.App> = [
-	{
-		Package: 'com.filfatstudios.downloadmii',
-		Name: 'DownloadMii',
-		Version: '2.0',
-		Platform: ['3ds'],
-		Description: 'DownloadMii, The repo based package manager for the homebrew community',
-		Homepage: 'http://www.downloadmii.com/',
-		Author: 'filfat Studios AB',
-		Section: 'Utils',
-		
-		Icon: {
-			Href: '',
-			Size: 48,
-		},
-		Accent: '',
-	}
-];
-
 module views {
 	export function AllApps(runtime: DownloadMii.Base) {
 		var pos = 0,
@@ -34,7 +15,7 @@ module views {
 			pages = 0;
 			
 		//Temporary data
-		var items = apps;
+		var items = runtime.Apps;
 			
 		pages = Math.ceil(items.length/21);	
 		while(1) {
