@@ -31,6 +31,7 @@ function main() {
 	Console['init']('top');
 	
 	dmii.GetSettings();
+	views.AllApps(dmii);
 	views.Main(dmii);
 }
 

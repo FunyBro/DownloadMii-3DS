@@ -10,9 +10,19 @@
 
 module DownloadMii {
 	export class App {
-		public name: string;
-		public version: string;
-		public baseUrl: string;
+		//Meta
+		public Package: string;
+		public Name: string;
+		public Version: string;
+		public Platform: Array<string>;
+		public Description: string;
+		public Homepage: string;
+		public Author: string;
+		public Section: string;
+		
+		//Assets
+		public Icon: {Href: string, Size: number};
+		public Accent: string;
 	}
 	export class Settings {
 		public repo = [

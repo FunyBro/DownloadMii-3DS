@@ -8,21 +8,33 @@
 //   ©2014-2015 filfat Studios AB
 //   Licensed under the MIT license
 
+var apps: Array<DownloadMii.App> = [
+	{
+		Package: 'com.filfatstudios.downloadmii',
+		Name: 'DownloadMii',
+		Version: '2.0',
+		Platform: ['3ds'],
+		Description: 'DownloadMii, The repo based package manager for the homebrew community',
+		Homepage: 'http://www.downloadmii.com/',
+		Author: 'filfat Studios AB',
+		Section: 'Utils',
+		
+		Icon: {
+			Href: '',
+			Size: 48,
+		},
+		Accent: '',
+	}
+];
+
 module views {
 	export function AllApps(runtime: DownloadMii.Base) {
 		var pos = 0,
 			page = 0,
 			pages = 0;
 			
-		var items = [];
-		
 		//Temporary data
-		for(var x = 0; x < 100; x++){
-			var entry = new DownloadMii.App();
-			entry.version = '1.0';
-			entry.name = 'App (' + x + ')';
-			items.push(entry);
-		}
+		var items = apps;
 			
 		pages = Math.ceil(items.length/21);	
 		while(1) {
@@ -59,9 +71,9 @@ module views {
 				}
 				var item: DownloadMii.App = items[r];
 				if(pos === x)
-					Console['print'](" >" + item.name + "\n");
+					Console['print'](" > " + item.Name + "\n");
 				else
-					Console['print']("  " + item.name + "\n");
+					Console['print']("   " + item.Name + "\n");
 			}
 			
 			Console['print']("\n  < Page " + (page+1) + " of " + pages + " >");
@@ -75,16 +87,23 @@ module views {
 				break;
 			else if(input.KEY_A) {
 				Console['clear']();
-				Console['print']("\n\n  " + app.name + " v" + app.version + "\n\n\n\n");
-				Console['print']("  Downloading...\n");
+				Console['print']("\n\n  " + app.Name + " v" + app.Version + "\n\n\n\n");
+				Console['print']("  Downloading...");
 				Console['flushBuffers']();
 				runtime.DownloadApp(app);
+				Console['print'](" Done!\n\n  B: Go back\n");
+				Console['flushBuffers']();
+				while(1){
+					input = Input.getInputDown();
+					if(input.KEY_B)
+						break;
+				}
 				App(runtime, app);
 				break;
 			}
 			
 			Console['clear']();
-			Console['print']("\n\n  " + app.name + " v" + app.version + "\n\n\n\n");
+			Console['print']("\n\n  " + app.Name + " v" + app.Version + "\n\n\n\n");
 			Console['print']("  A: Download\n");
 			Console['print']("  B: Go back\n");
 			Console['flushBuffers']();
