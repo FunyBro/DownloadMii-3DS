@@ -44,12 +44,17 @@ module DownloadMii {
 		}
 		public GetSettings() {
 			var f = this.ReadFile('settings.json');
-			if(typeof f === undefined || f === null){
+			if(typeof f === undefined || f === null || f === ''){
 				this.Settings = new Settings();
 				this.WriteFile('settings.json', JSON.stringify(this.Settings));
 			}
 			else {
-				this.Settings = <Settings>JSON.parse(f);
+				try {
+					this.Settings = <Settings>JSON.parse(f);
+				} catch (e) {
+					//TODO: Handle error
+					throw e.message;
+				}
 			}
 		}
 	}
