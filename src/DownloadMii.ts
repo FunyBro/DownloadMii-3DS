@@ -26,9 +26,12 @@ module DownloadMii {
 		public Accent: string;
 	}
 	export class Settings {
+		public cache: boolean = true; //TODO
 		public sources = [
 			'http://www.downloadmii.com/',
 		];
+		
+		//Taken from .dmii
 	}
 	
 	export class Base {
@@ -37,6 +40,7 @@ module DownloadMii {
 		public ReadFile: Function;
 		public WriteFile: Function;
 		public Apps: Array<App> = [];
+		public Errors: Array<string> = [];
 		
 		public DownloadApp(app: App) {
 			
@@ -44,14 +48,15 @@ module DownloadMii {
 		public GetApps() {
 			var sources = this.Settings.sources;
 			for(var n = 0; n < sources.length; n++) {
-				//var Apps = [];
-				var data = this.DownloadFile(sources[n] + 'downloadmii.json');
+				
+				//TODO: Check if url is correct to avoid crash
+				var data = this.DownloadFile('http://' + sources[n] + '/downloadmii.json');
 				var apps;
 				
 				try{
 					apps = JSON.parse(data);
 				} catch(e) {
-					//TODO: Handle exception
+					this.Errors.push('Failed to fetch list of packages!');
 					continue;
 				}
 				
@@ -59,16 +64,37 @@ module DownloadMii {
 			}
 		}
 		public GetSettings() {
+			
+			//Read settings.json
 			var f = this.ReadFile('settings.json');
 			if(typeof f === undefined || f === null || f === ''){
 				this.Settings = new Settings();
-				this.WriteFile('settings.json', JSON.stringify(this.Settings));
+				this.WriteFile('settings.json', JSON.stringify(this.Settings, null, 2));
 			}
 			else {
 				try {
 					this.Settings = <Settings>JSON.parse(f);
 				} catch (e) {
-					//TODO: Handle error
+					this.Errors.push('settings.json invalid: "' + e.message + '"!');
+					throw e.message;
+				}
+			}
+			
+			//Read .dmii app
+			f = this.ReadFile('.dmii');
+			if(typeof f === undefined || f === null || f === ''){
+				this.Settings = new Settings();
+				this.WriteFile('.dmii', JSON.stringify({
+					Package: 'com.filfatstudios.downloadmii',
+					Name: 'DownloadMii',
+					Version: VERSION,
+				}));
+			}
+			else {
+				try {
+					this.Settings = <Settings>JSON.parse(f);
+				} catch (e) {
+					this.Errors.push('.dmii invalid: "' + e.message + '"!');
 					throw e.message;
 				}
 			}

@@ -125,7 +125,7 @@ module views {
 			}
 			
 			Console['clear']();
-			Console['print']("\n\n  DownloadMii vXXXX\n\n\n\n");
+			Console['print']("\n\n  DownloadMii v" + VERSION + "\n\n\n\n");
 			for(var x = 0; x < items.length; x++){
 				var item = items[x];
 				Console['print']((position == x ? " >" : "  ") + item.title + "\n");

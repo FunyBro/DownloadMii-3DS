@@ -10,11 +10,12 @@
 
 /// <reference path="DownloadMii.ts" />
 /// <reference path="views.ts" />
-
 declare var Network: any;
 declare var System: any;
 declare var Input: any;
 declare var FileIO: any;
+
+var VERSION = '2.0dev';
 
 var dmii = new DownloadMii.Base();
 dmii.ReadFile = function(uri) {
@@ -33,8 +34,12 @@ function main() {
 	dmii.GetSettings();
 	dmii.GetApps();
 	
-	//views.AllApps(dmii);
+	Console['print']('[DownloadMii REPO]: ' + dmii.Settings.sources[0]);
+	
 	views.Main(dmii);
+	
+	for(var error in dmii.Errors)
+		Console['print']('[DownloadMii ERROR]: ' + error);
 }
 
 //Start App
