@@ -28,7 +28,7 @@ module DownloadMii {
 	export class Settings {
 		public cache: boolean = true; //TODO
 		public sources = [
-			'http://www.downloadmii.com/',
+			'www.downloadmii.com',
 		];
 		
 		//Taken from .dmii
@@ -43,12 +43,18 @@ module DownloadMii {
 		public Errors: Array<string> = [];
 		
 		public DownloadApp(app: App) {
-			
+			for(var n = 0; n < app.Platform.length; n++)
+				if(app.Platform[n] === '3ds'){
+					FileIO.createDirectory(app.Bin[n].Path);
+					this.WriteFile(app.Bin[n].Path + 'app.dmii', this.DownloadFile(app.Bin[n].Href));
+					System.extractZip(app.Bin[n].Path + 'app.dmii');
+				}
 		}
 		public GetApps() {
 			var sources = this.Settings.sources;
+			if(sources == null)
+				sources = ['www.downloadmii.com'];
 			for(var n = 0; n < sources.length; n++) {
-				
 				//TODO: Check if url is correct to avoid crash
 				var data = this.DownloadFile('http://' + sources[n] + '/downloadmii.json');
 				var apps;

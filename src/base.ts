@@ -10,6 +10,7 @@
 
 /// <reference path="DownloadMii.ts" />
 /// <reference path="views.ts" />
+
 declare var Network: any;
 declare var System: any;
 declare var Input: any;
@@ -34,10 +35,7 @@ function main() {
 	dmii.GetSettings();
 	dmii.GetApps();
 	
-	Console['print']('[DownloadMii REPO]: ' + dmii.Settings.sources[0]);
-	
 	views.Main(dmii);
-	
 	for(var error in dmii.Errors)
 		Console['print']('[DownloadMii ERROR]: ' + error);
 }
