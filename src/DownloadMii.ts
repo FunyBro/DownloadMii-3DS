@@ -28,7 +28,7 @@ module DownloadMii {
 	export class Settings {
 		public cache: boolean = true; //TODO
 		public sources = [
-			'www.downloadmii.com',
+			'homebrew.filfatstudios.com',
 		];
 		
 		//Taken from .dmii
@@ -53,7 +53,7 @@ module DownloadMii {
 		public GetApps() {
 			var sources = this.Settings.sources;
 			if(sources == null)
-				sources = ['www.downloadmii.com'];
+				sources = ['homebrew.filfatstudios.com'];
 			for(var n = 0; n < sources.length; n++) {
 				//TODO: Check if url is correct to avoid crash
 				var data = this.DownloadFile('http://' + sources[n] + '/downloadmii.json');
