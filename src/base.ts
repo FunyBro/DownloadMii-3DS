@@ -36,8 +36,6 @@ function main() {
 	dmii.GetApps();
 	
 	views.Main(dmii);
-	for(var error in dmii.Errors)
-		Console['print']('[DownloadMii ERROR]: ' + error);
 }
 
 //Start App
